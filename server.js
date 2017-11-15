@@ -6,7 +6,7 @@ var https = require('https');
 
 //---------Start routers-----------
 app.get('/', (req,res) => {
-    res.send("Hello world!");
+    res.sendFile(__dirname + '/views/index.html');
 }  );
 
 app.get('/new/search/:searchTerm*', (req, res) => {
@@ -26,7 +26,8 @@ app.get('/new/search/:searchTerm*', (req, res) => {
     
     insert(json);
     //do the search and print it to the page
-    search(searchTerm, res, offset);
+    //search(searchTerm, res, offset);
+
 } );
 
 app.get('/recentsearches/', (req , res) => {
@@ -66,16 +67,18 @@ function search(searchTerm, response, offset) {
   });
 }
 
-function get(res) {
-  mongo.connect(uri, function(err, db) {
-    if(err) throw err;
-    console.log('connected to db');
-    var collection = db.collection('searches');
-    console.log('collection is: ' +collection);
-    var result = collection.find().toArray();
-    res.json(result);
-    db.close();
-  })
+function get( res ) {
+  mongo.connect(uri, (err, db) => {
+  if(err) throw err;
+  var collection = db.collection('searches');
+  
+  collection.find().toArray(function(err, doc) {
+    res.send(doc);
+  });
+  db.close();
+  
+}) 
+  
 }
 
 app.listen(3000, () => console.log("App listening on port 3000"));
