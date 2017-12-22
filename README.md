@@ -1,7 +1,7 @@
 Image Search Abstraction Layer
 =========================
 
-[Demo this project here](https://url-shortener-ab.glitch.me)
+[Demo this project here](https://img-search-abs-layer.glitch.me/)
 
 This project achieves these user stories:
 
